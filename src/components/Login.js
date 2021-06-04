@@ -3,14 +3,38 @@ import React, { Component } from 'react';
 export default class Login extends Component {
   constructor(props) {
     super(props);
-    this.emailInputRef = React.createRef();
-    this.passwordInputRef = React.createRef();
+    // this.emailInputRef = React.createRef();
+    // this.passwordInputRef = React.createRef();
+    this.state = {
+      email: '',
+      password: '',
+    };
   }
+
+  // handleFormSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log('Email value: ', this.emailInputRef);
+  //   console.log('Password value: ', this.passwordInputRef);
+  // };
+
+  handleEmailInput = (e) => {
+    const email = e.target.value;
+    this.setState({
+      email,
+    });
+  };
+
+  handlePasswordInput = (e) => {
+    const password = e.target.value;
+    this.setState({
+      password,
+    });
+  };
 
   handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log('Email value: ', this.emailInputRef);
-    console.log('Password value: ', this.passwordInputRef);
+    const { email, password } = this.state;
+    console.log('Email: ', email, 'Password: ', password);
   };
 
   render() {
@@ -22,7 +46,8 @@ export default class Login extends Component {
             type="email"
             placeholder="Email"
             required
-            ref={this.emailInputRef}
+            // ref={this.emailInputRef}
+            onChange={this.handleEmailInput}
           />
         </div>
         <div className="field">
@@ -30,7 +55,8 @@ export default class Login extends Component {
             type="password"
             placeholder="Password"
             required
-            ref={this.passwordInputRef}
+            // ref={this.passwordInputRef}
+            onChange={this.handlePasswordInput}
           />
         </div>
         <div className="field">
