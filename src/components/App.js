@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
+import { Home, Navbar, Page404, Login, Signup } from './';
 
 import { fetchPosts } from '../actions/posts';
-import { Home, Navbar, Page404, Login, Signup } from './';
+import { userAuthentication } from '../actions/auth';
 
 class App extends Component {
   componentDidMount() {
@@ -14,7 +15,13 @@ class App extends Component {
 
     if (token) {
       const user = jwtDecode(token);
-      console.log('Token payload is: ', user);
+      this.props.dispatch(
+        userAuthentication({
+          name: user.name,
+          _id: user._id,
+          email: user.email,
+        })
+      );
     }
   }
 
