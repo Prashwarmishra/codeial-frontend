@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 function Navbar(props) {
+  const { user, isLoggedin } = props.auth;
+  const username = user.name;
   return (
     <div>
       <nav className="nav">
@@ -47,7 +50,7 @@ function Navbar(props) {
               alt="user-dp"
               id="user-dp"
             />
-            <span>John Doe</span>
+            <span>{isLoggedin ? `${username}` : 'user'}</span>
           </div>
           <div className="nav-links">
             <ul>
@@ -68,4 +71,10 @@ function Navbar(props) {
   );
 }
 
-export default Navbar;
+export function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+
+export default connect(mapStateToProps)(Navbar);
