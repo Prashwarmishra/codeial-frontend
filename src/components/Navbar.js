@@ -51,11 +51,13 @@ class Navbar extends React.Component {
         <div className="right-nav">
           {isLoggedin && (
             <div className="user">
-              <img
-                src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-                alt="user-dp"
-                id="user-dp"
-              />
+              <Link to="/settings">
+                <img
+                  src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
+                  alt="user-dp"
+                  id="user-dp"
+                />
+              </Link>
               <span>{user.name}</span>
             </div>
           )}
@@ -63,7 +65,7 @@ class Navbar extends React.Component {
             <ul>
               {!isLoggedin && (
                 <li>
-                  <Link to="/signin">Log In</Link>
+                  <Link to="/login">Log In</Link>
                 </li>
               )}
 
