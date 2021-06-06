@@ -1,5 +1,6 @@
 import {
   AUTHENTICATE_USER,
+  CLEAR_AUTH,
   LOGIN_FAILURE,
   LOGIN_START,
   LOGIN_SUCCESS,
@@ -18,6 +19,11 @@ const initialAuthState = {
 
 export default function auth(state = initialAuthState, action) {
   switch (action.type) {
+    case CLEAR_AUTH:
+      return {
+        ...state,
+        error: null,
+      };
     case LOGIN_START:
     case SIGNUP_START:
       return {

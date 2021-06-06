@@ -14,3 +14,6 @@ export const SIGNUP_FAILURE = 'SIGNUP-LOGIN_FAILURE';
 //authenticate and logout
 export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
 export const LOG_OUT = 'LOG_OUT';
+
+//clear error messages on signup and login
+export const CLEAR_AUTH = 'CLEAR_AUTH';
