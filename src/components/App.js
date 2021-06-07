@@ -8,12 +8,10 @@ import {
   Switch,
 } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-import { Home, Navbar, Page404, Login, Signup } from './';
+import { Home, Navbar, Page404, Login, Signup, Settings } from './';
 
 import { fetchPosts } from '../actions/posts';
 import { userAuthentication } from '../actions/auth';
-
-const Settings = () => <div>Settings</div>;
 
 const PrivateRoute = (privateRouteProps) => {
   const { isLoggedin, component: Component, path } = privateRouteProps;
