@@ -8,6 +8,8 @@ import {
   SIGNUP_FAILURE,
   SIGNUP_START,
   SIGNUP_SUCCESS,
+  USER_EDIT_FAILURE,
+  USER_EDIT_SUCCESS,
 } from '../actions/actionTypes';
 
 const initialAuthState = {
@@ -57,6 +59,17 @@ export default function auth(state = initialAuthState, action) {
         ...state,
         user: {},
         isLoggedin: false,
+      };
+    case USER_EDIT_SUCCESS:
+      return {
+        ...state,
+        user: action.user,
+        error: false,
+      };
+    case USER_EDIT_FAILURE:
+      return {
+        ...state,
+        error: action.error,
       };
     default:
       return state;

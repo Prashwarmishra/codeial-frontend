@@ -55,7 +55,7 @@ export function login(email, password) {
       .then((data) => {
         console.log('data::', data);
         if (data.success) {
-          localStorage.setItem('token', data.data.token);
+          setAuthTokeninLocalStorage(data.data.token);
           return dispatch(loginSuccess(data.data.user));
         }
         return dispatch(loginFailure(data.message));
@@ -171,7 +171,7 @@ export function userEdit(name, password, confirmPassword, id) {
         console.log(data);
         if (data.success) {
           if (data.data.token) {
-            setAuthTokeninLocalStorage('token', data.data.token);
+            localStorage.setItem('token', data.data.token);
           }
           return dispatch(userEditSuccess(data.data.user));
         }
