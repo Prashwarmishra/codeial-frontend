@@ -8,10 +8,11 @@ import {
   Switch,
 } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-import { Home, Navbar, Page404, Login, Signup, Settings } from './';
 
+import { Home, Navbar, Page404, Login, Signup, Settings } from './';
 import { fetchPosts } from '../actions/posts';
 import { userAuthentication } from '../actions/auth';
+import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 
 const PrivateRoute = (privateRouteProps) => {
   const { isLoggedin, component: Component, path } = privateRouteProps;
@@ -39,7 +40,7 @@ const PrivateRoute = (privateRouteProps) => {
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
-    const token = localStorage.getItem('token');
+    const token = getAuthTokenFromLocalStorage();
 
     if (token) {
       const user = jwtDecode(token);

@@ -17,3 +17,7 @@ export const LOG_OUT = 'LOG_OUT';
 
 //clear error messages on signup and login
 export const CLEAR_AUTH = 'CLEAR_AUTH';
+
+//edit profile
+export const USER_EDIT_SUCCESS = 'USER_EDIT_SUCCESS';
+export const USER_EDIT_FAILURE = 'USER_EDIT_FAILURE';
