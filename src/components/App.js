@@ -21,6 +21,7 @@ import {
 import { fetchPosts } from '../actions/posts';
 import { userAuthentication } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
+import { getUserFriends } from '../actions/friends';
 
 const PrivateRoute = (privateRouteProps) => {
   const { isLoggedin, component: Component, path } = privateRouteProps;
@@ -59,12 +60,13 @@ class App extends Component {
           email: user.email,
         })
       );
+      this.props.dispatch(getUserFriends());
     }
   }
 
   render() {
     console.log('PROPS', this.props);
-    const { posts, auth } = this.props;
+    const { posts, auth, friends } = this.props;
 
     return (
       <Router>
@@ -76,7 +78,14 @@ class App extends Component {
               exact
               path="/"
               render={(props) => {
-                return <Home posts={posts} {...props} />;
+                return (
+                  <Home
+                    posts={posts}
+                    {...props}
+                    friends={friends}
+                    isLoggedin={auth.isLoggedin}
+                  />
+                );
               }}
             />
             <Route path="/login" component={Login} />
@@ -103,6 +112,7 @@ function mapStateToProps(state) {
   return {
     posts: state.posts,
     auth: state.auth,
+    friends: state.friends,
   };
 }
 
