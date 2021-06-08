@@ -21,3 +21,8 @@ export const CLEAR_AUTH = 'CLEAR_AUTH';
 //edit profile
 export const USER_EDIT_SUCCESS = 'USER_EDIT_SUCCESS';
 export const USER_EDIT_FAILURE = 'USER_EDIT_FAILURE';
+
+//user profile
+export const FETCH_USER_PROFILE = 'FETCH_USER_PROFILE';
+export const USER_PROFILE_SUCCESS = 'USER_PROFILE_SUCCESS';
+export const USER_PROFILE_FAILURE = 'USER_PROFILE_FAILURE';

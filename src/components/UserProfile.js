@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getUserProfile } from '../actions/profile';
 
-export default class Userprofile extends Component {
+class Userprofile extends Component {
+  componentDidMount() {
+    const { userId } = this.props.match.params;
+    console.log(userId);
+    this.props.dispatch(getUserProfile(userId));
+  }
+
   render() {
-    const {
-      match: { params },
-    } = this.props;
-    console.log('user props: ', params);
+    const { user, inProgress } = this.props.profile;
+    if (inProgress) {
+      return <h3>Updating...</h3>;
+    }
     return (
       <div className="settings">
         <div className="img-container">
@@ -16,12 +24,12 @@ export default class Userprofile extends Component {
         </div>
         <div className="field">
           <div className="field-label">Name</div>
-          <div className="field-value">some name</div>
+          <div className="field-value">{user.name}</div>
         </div>
 
         <div className="field">
           <div className="field-label">Email</div>
-          <div className="field-value">somebody@email.com</div>
+          <div className="field-value">{user.email}</div>
         </div>
 
         <div className="btn-grp">
@@ -31,3 +39,11 @@ export default class Userprofile extends Component {
     );
   }
 }
+
+function mapStateToProps({ profile }) {
+  return {
+    profile,
+  };
+}
+
+export default connect(mapStateToProps)(Userprofile);

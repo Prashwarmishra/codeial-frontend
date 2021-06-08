@@ -6,4 +6,5 @@ export const APIUrls = {
   login: () => `${API_ROOT}/users/login`,
   signup: () => `${API_ROOT}/users/signup`,
   editProfile: () => `${API_ROOT}/users/edit`,
+  userProfile: (userId) => `${API_ROOT}/users/${userId}`,
 };
