@@ -1,19 +1,70 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addFriend } from '../actions/friends';
 import { getUserProfile } from '../actions/profile';
+import { APIUrls } from '../helpers/urls';
+import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 
 class Userprofile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      success: null,
+      error: null,
+    };
+  }
+
   componentDidMount() {
     const { userId } = this.props.match.params;
     console.log(userId);
     this.props.dispatch(getUserProfile(userId));
   }
 
+  handleAddFriendClick = async () => {
+    const { userId } = this.props.match.params;
+    const url = APIUrls.addFriend(userId);
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'Application/x-www-form-urlencoded',
+        Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+      },
+    };
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (data.success) {
+      this.props.dispatch(addFriend(data.data.friendship));
+      this.setState({
+        success: true,
+        error: null,
+      });
+    } else {
+      this.setState({
+        error: data.message,
+        success: null,
+      });
+    }
+  };
+
+  checkFriendship = () => {
+    const { match, friends } = this.props;
+    const { userId } = match.params;
+    console.log('/////////////////////////, ', friends);
+    const index = friends.map((friend) => friend.to_user._id).indexOf(userId);
+
+    if (index !== -1) {
+      return true;
+    }
+    return false;
+  };
+
   render() {
     const { user, inProgress } = this.props.profile;
+    const isFriend = this.checkFriendship();
     if (inProgress) {
       return <h3>Updating...</h3>;
     }
+    const { success, error } = this.state;
     return (
       <div className="settings">
         <div className="img-container">
@@ -33,16 +84,31 @@ class Userprofile extends Component {
         </div>
 
         <div className="btn-grp">
-          <button className="btn save-btn">Add Friend</button>
+          {isFriend ? (
+            <button className="btn save-btn">Remove Friend</button>
+          ) : (
+            <button
+              className="btn save-btn"
+              onClick={this.handleAddFriendClick}
+            >
+              Add Friend
+            </button>
+          )}
         </div>
+
+        {success && (
+          <div className="alert success-dailog">Friend added Successfully!</div>
+        )}
+        {error && <div className="alert error-dailog">{error}</div>}
       </div>
     );
   }
 }
 
-function mapStateToProps({ profile }) {
+function mapStateToProps({ profile, friends }) {
   return {
     profile,
+    friends,
   };
 }
 
