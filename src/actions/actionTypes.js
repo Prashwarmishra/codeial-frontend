@@ -34,5 +34,6 @@ export const FETCH_USER_FRIENDS = 'FETCH_USER_FRIENDS';
 export const ADD_FRIEND = 'ADD_FRIEND';
 export const REMOVE_FRIEND = 'REMOVE_FRIEND';
 
-//add Post
+//add Post and Comment
 export const ADD_POST = 'ADD_POST';
+export const ADD_COMMENT = 'ADD_COMMENT';
