@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createComment } from '../actions/posts';
+import { createComment, toggleLike } from '../actions/posts';
 // import {connect} from 'react-redux';
 import { Comment } from './';
 
@@ -21,7 +21,7 @@ class Post extends Component {
   };
 
   handleAddComment = (e) => {
-    console.log('Key pressed: ', e.key);
+    // console.log('Key pressed: ', e.key);
     if (e.key === 'Enter') {
       const { content } = this.state;
       const postId = this.props.post._id;
@@ -30,8 +30,14 @@ class Post extends Component {
     }
   };
 
+  handlePostLike = () => {
+    const { user, dispatch, post } = this.props;
+    dispatch(toggleLike('Post', post._id, user._id));
+  };
+
   render() {
-    const { post } = this.props;
+    const { post, user } = this.props;
+    const isPostLiked = post.likes.includes(user._id);
     return (
       <div className="post-wrapper" key={post._id}>
         <div className="post-header">
@@ -50,13 +56,20 @@ class Post extends Component {
           <div className="post-content">{post.content}</div>
 
           <div className="post-actions">
-            <div className="post-like">
-              <img
-                src="https://image.flaticon.com/icons/svg/1077/1077035.svg"
-                alt="likes-icon"
-              />
+            <button className="post-like no-btn" onClick={this.handlePostLike}>
+              {isPostLiked ? (
+                <img
+                  src="https://image.flaticon.com/icons/svg/1076/1076984.svg"
+                  alt="like-icon"
+                />
+              ) : (
+                <img
+                  src="https://image.flaticon.com/icons/svg/1077/1077035.svg"
+                  alt="unlike-icon"
+                />
+              )}
               <span>{post.likes.length}</span>
-            </div>
+            </button>
 
             <div className="post-comments-icon">
               <img
@@ -92,4 +105,10 @@ class Post extends Component {
   }
 }
 
-export default connect()(Post);
+function mapStateToProps({ auth }) {
+  return {
+    user: auth.user,
+  };
+}
+
+export default connect(mapStateToProps)(Post);
