@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { createComment } from '../actions/posts';
 // import {connect} from 'react-redux';
 import { Comment } from './';
 
@@ -12,14 +14,19 @@ class Post extends Component {
   }
 
   handleCommentChange = (e) => {
+    // console.log(e.target.value);
     this.setState({
       content: e.target.value,
     });
   };
 
   handleAddComment = (e) => {
-    if (e.target.value === 'Enter') {
-      //   const { content } = this.state;
+    console.log('Key pressed: ', e.key);
+    if (e.key === 'Enter') {
+      const { content } = this.state;
+      const postId = this.props.post._id;
+      this.props.dispatch(createComment(content, postId));
+      this.setState({ content: '' });
     }
   };
 
@@ -60,7 +67,12 @@ class Post extends Component {
             </div>
           </div>
           <div className="post-comment-box">
-            <input placeholder="Start typing a comment" />
+            <input
+              placeholder="Start typing a comment"
+              onChange={this.handleCommentChange}
+              onKeyPress={this.handleAddComment}
+              value={this.state.content}
+            />
           </div>
 
           <div className="post-comments-list">
@@ -80,4 +92,4 @@ class Post extends Component {
   }
 }
 
-export default Post;
+export default connect()(Post);
