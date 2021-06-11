@@ -30,6 +30,9 @@ export const USER_PROFILE_FAILURE = 'USER_PROFILE_FAILURE';
 //user friends
 export const FETCH_USER_FRIENDS = 'FETCH_USER_FRIENDS';
 
-//add/remove friends
+//add or remove friends
 export const ADD_FRIEND = 'ADD_FRIEND';
 export const REMOVE_FRIEND = 'REMOVE_FRIEND';
+
+//add Post
+export const ADD_POST = 'ADD_POST';
