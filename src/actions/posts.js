@@ -1,4 +1,10 @@
-import { ADD_COMMENT, ADD_POST, POST_LIKE, UPDATE_POSTS } from './actionTypes';
+import {
+  ADD_COMMENT,
+  ADD_POST,
+  COMMENT_LIKE,
+  POST_LIKE,
+  UPDATE_POSTS,
+} from './actionTypes';
 import { APIUrls } from '../helpers/urls';
 import { getAuthTokenFromLocalStorage, getFormBody } from '../helpers/utils';
 
@@ -91,7 +97,16 @@ export function postLike(postId, userId) {
   };
 }
 
-export function toggleLike(likeableType, likeableId, userId) {
+export function commentLike(commentId, userId, postId) {
+  return {
+    type: COMMENT_LIKE,
+    commentId,
+    userId,
+    postId,
+  };
+}
+
+export function toggleLike(likeableType, likeableId, userId, parentId) {
   return (dispatch) => {
     const url = APIUrls.toggleLike(likeableType, likeableId);
 
@@ -108,6 +123,8 @@ export function toggleLike(likeableType, likeableId, userId) {
         if (data.success) {
           if (likeableType === 'Post') {
             dispatch(postLike(likeableId, userId));
+          } else {
+            dispatch(commentLike(likeableId, userId, parentId));
           }
         }
       });

@@ -1,6 +1,7 @@
 import {
   ADD_COMMENT,
   ADD_POST,
+  COMMENT_LIKE,
   POST_LIKE,
   UPDATE_POSTS,
 } from '../actions/actionTypes';
@@ -26,10 +27,31 @@ export default function posts(state = [], action) {
             ...post,
             likes: [...post.likes, action.userId],
           };
+          // post.likes.push(action.userId);
         }
         return post;
       });
       return newLikedPost;
+    case COMMENT_LIKE:
+      const newLikedComment = state.map((post) => {
+        if (post._id === action.postId) {
+          const newComment = post.comments.map((comment) => {
+            if (comment._id === action.commentId) {
+              return {
+                ...comment,
+                likes: [...comment.likes, action.userId],
+              };
+            }
+            return comment;
+          });
+          return {
+            ...post,
+            comments: newComment,
+          };
+        }
+        return post;
+      });
+      return newLikedComment;
     default:
       return state;
   }
