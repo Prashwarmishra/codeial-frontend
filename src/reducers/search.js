@@ -11,5 +11,7 @@ export default function search(state = initialSearchState, action) {
         ...state,
         results: action.users,
       };
+    default:
+      return state;
   }
 }
